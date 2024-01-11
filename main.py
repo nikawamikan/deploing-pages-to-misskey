@@ -21,10 +21,10 @@ if BASE_URL is None:
     print("環境変数BASE_URLが設定されていません")
     exit(1)
 
-data_dir = "data/"
+pages_dir = "pages/"
 
-if not os.path.isdir(data_dir):
-    os.mkdir(data_dir)
+if not os.path.isdir(pages_dir):
+    os.mkdir(pages_dir)
 
 def reload():
     """script.isとcontent.jsonを削除して、再度取得する"""
@@ -34,15 +34,15 @@ def reload():
     # jsonをdictに変換
     response_dict = json.loads(response.text)
 
-    # dataディレクトリ内を再帰的に削除
-    if os.path.isdir(data_dir):
-        shutil.rmtree(data_dir)
-        os.mkdir(data_dir)
+    # response_dictが空の場合は異常終了
+    if len(response_dict) == 0:
+        print("ページがありません")
+        exit(1)
 
     for page_obj in response_dict:
         # dataディレクトリ内にページIDのディレクトリを作成
         page_id = page_obj["id"]
-        page_dir = f"{data_dir}{page_id}/"
+        page_dir = f"{pages_dir}{page_id}/"
         if not os.path.isdir(page_dir):
             os.mkdir(page_dir)
 
@@ -57,7 +57,7 @@ def reload():
 
 def deploy(page_id: str):
     """content.jsonにscript.isを結合して、デプロイする"""
-    page_dir = f"{data_dir}{page_id}/"
+    page_dir = f"{pages_dir}{page_id}/"
 
     try:
         # script.isを読み込み
