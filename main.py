@@ -232,7 +232,9 @@ def main():
         deploy(page_id)
     elif args.show:
         # ページIDを表示
-        show_pages(load_pages())
+        page_id = select_page(load_pages())
+        # vscodeで開く
+        os.system(f"code {pages_dir}{page_id}/script.is")
     else:
         # 引数がない場合はヘルプを表示
         parser.print_help()
