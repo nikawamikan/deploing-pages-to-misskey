@@ -6,6 +6,11 @@ import os
 from dotenv import load_dotenv
 import shutil
 
+
+
+
+
+
 load_dotenv()
 
 # 環境変数から取得
@@ -26,6 +31,78 @@ pages_dir = "pages/"
 if not os.path.isdir(pages_dir):
     os.mkdir(pages_dir)
 
+
+remove_keys_list = [
+    "id",
+    "createdAt",
+    "updatedAt",
+    "likedCount",
+    "userId",
+    "user",
+    "isPublic",
+    "eyeCatchingImage",
+    "eyeCatchingImageId",
+    "attachedFiles",
+    "isLiked",
+]
+
+def remove_keys(data: dict, append_keys_list: list = []):
+    """dictから不要なキーを削除する"""
+
+    for key in remove_keys_list + append_keys_list:
+        if key in data:
+            del data[key]
+
+# indexからページIDを取得する関数
+def get_page_id(index: int, pages: dict):
+    """indexからページIDを取得する"""
+
+    # indexが範囲外の場合は異常終了
+    if index < 0 or index >= len(pages):
+        print(f"indexが範囲外です: {index}")
+        exit(1)
+
+    return list(pages.keys())[index]
+
+
+def load_pages():
+    """pages.jsonを読み込む"""
+    try:
+        with open(f"{pages_dir}pages.json", mode="r", encoding="utf-8") as f:
+            pages = json.load(f)
+    except FileNotFoundError as e:
+        print(f"ファイルが見つかりません: {e}")
+        exit(1)
+
+    return pages
+
+def show_pages(pages: dict):
+    """pagesを一覧表示する"""
+    for  i, (page_id, page) in enumerate(pages.items()):
+        print(f"{i+1}: \n  {page_id}: {page['title']}\n  summary: {page['summary']}")
+
+
+# pages.jsonを読み込み一覧表示を行い、ページIDを返す関数
+def select_page(pages: dict):
+    """pagesを一覧表示し、ページIDを返す"""
+
+    # pagesを一覧表示
+    show_pages(pages)
+
+    # 入力を受け付ける
+    index = input("ページを選択してください: ")
+
+    # 入力が数字以外の場合は再度入力を受け付ける
+    while not index.isdigit():
+        index = input("数字を入力してください: ")
+
+    # indexからページIDを取得
+    page_id = get_page_id(int(index)-1, pages)
+
+    return page_id
+
+
+# script.isとcontent.jsonを再取得する関数
 def reload():
     """script.isとcontent.jsonを削除して、再度取得する"""
     endpoint=f"{BASE_URL}i/pages"
@@ -39,6 +116,9 @@ def reload():
         print("ページがありません")
         exit(1)
 
+    # pages一覧表示用のdictを作成
+    pages = {}
+
     for page_obj in response_dict:
         # dataディレクトリ内にページIDのディレクトリを作成
         page_id = page_obj["id"]
@@ -50,9 +130,22 @@ def reload():
         with open(f"{page_dir}script.is", mode="w") as f:
             f.write(page_obj["script"])
 
+        # pages一覧表示用のdictに追加
+        pages[page_id] = {
+            "title": page_obj["title"],
+            "summary": page_obj["summary"],
+        }
+
+        # 不要なキーを削除
+        remove_keys(page_obj, ["script"])
+
         # jsonを書き出し
         with open(f"{page_dir}content.json", mode="w") as f:
             f.write(json.dumps(page_obj, indent=4, ensure_ascii=False))
+    
+    # pages一覧表示用のdictを書き出し
+    with open(f"{pages_dir}pages.json", mode="w") as f:
+        f.write(json.dumps(pages, indent=4, ensure_ascii=False))
 
 
 def deploy(page_id: str):
@@ -74,17 +167,7 @@ def deploy(page_id: str):
     json_data["script"] = script
 
     # json_dataから不要なキーを削除
-    del json_data["id"]
-    del json_data["createdAt"]
-    del json_data["updatedAt"]
-    del json_data["likedCount"]
-    del json_data["userId"]
-    del json_data["user"]
-    del json_data["isPublic"]
-    del json_data["eyeCatchingImage"]
-    del json_data["eyeCatchingImageId"]
-    del json_data["attachedFiles"]
-    del json_data["isLiked"]
+    remove_keys(json_data)
 
     # json_strと現在のページを比較する
     endpoint=f"{BASE_URL}pages/show"
@@ -99,23 +182,7 @@ def deploy(page_id: str):
     response_dict = json.loads(response.text)
 
     # response_dictから不要なキーを削除
-    del response_dict["id"]
-    del response_dict["createdAt"]
-    del response_dict["updatedAt"]
-    del response_dict["likedCount"]
-    del response_dict["userId"]
-    del response_dict["user"]
-    del response_dict["isPublic"]
-    del response_dict["eyeCatchingImage"]
-    del response_dict["eyeCatchingImageId"]
-    del response_dict["attachedFiles"]
-
-    # ファイル書き出し
-    with open(f"{page_dir}test.json", mode="w") as f:
-        f.write(json.dumps(json_data, indent=4, ensure_ascii=False))
-
-    with open(f"{page_dir}test2.json", mode="w") as f:
-        f.write(json.dumps(response_dict, indent=4, ensure_ascii=False))
+    remove_keys(response_dict)
 
     # json_data と response_dict を比較
     if json_data == response_dict:
@@ -150,6 +217,7 @@ def main():
 
     parser.add_argument("--reload", action="store_true", help="script.isとcontent.jsonを再取得")
     parser.add_argument("--deploy", action="store_true", help="script.isをデプロイ")
+    parser.add_argument("--show", action="store_true", help="ページIDを表示")
     parser.add_argument("--page_id", help="ページIDを指定")
     args = parser.parse_args()
 
@@ -157,9 +225,14 @@ def main():
         reload()
     elif args.deploy:
         if args.page_id is None:
-            print("ページIDを指定してください")
-            exit(1)
-        deploy(args.page_id)
+            # ページIDがない場合は一覧表示
+            page_id = select_page(load_pages())
+        else:
+            page_id = args.page_id
+        deploy(page_id)
+    elif args.show:
+        # ページIDを表示
+        show_pages(load_pages())
     else:
         # 引数がない場合はヘルプを表示
         parser.print_help()
