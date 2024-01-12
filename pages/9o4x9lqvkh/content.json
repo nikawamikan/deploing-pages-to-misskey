@@ -1,0 +1,53 @@
+{
+    "content": [
+        {
+            "id": "7cc0eb02-6f4a-4772-8cd9-4025ea398b63",
+            "text": "本当に変更されてる？{ rand } { test }",
+            "type": "text"
+        }
+    ],
+    "variables": [
+        {
+            "id": "fa69e8b0-4dbe-45ca-a876-dec03df315fa",
+            "args": [
+                {
+                    "id": "f0f73496-6781-4397-b76b-a6f757fd503c",
+                    "type": "number",
+                    "value": 0
+                },
+                {
+                    "id": "fa9e6bf0-25f5-4ad2-89b9-55d539fe3c2b",
+                    "type": "number",
+                    "value": 2147483647
+                }
+            ],
+            "name": "rand",
+            "type": "dailyRannum",
+            "value": null
+        },
+        {
+            "id": "fa9e1063-8295-42dc-b300-0d5d58728fa6",
+            "args": [
+                {
+                    "id": "3a36365a-f8f5-4e96-a094-ca7651ada9ee",
+                    "type": "ref",
+                    "value": "rand"
+                },
+                {
+                    "id": "029316fe-34ab-431e-a1a4-3445e6bf47dc",
+                    "type": "textList",
+                    "value": "te\ns\nt"
+                }
+            ],
+            "name": "test",
+            "type": "seedRandomPick",
+            "value": null
+        }
+    ],
+    "title": "てｓｔ",
+    "name": "1704502786569",
+    "summary": "ページの要約を入力 入力されていることを確認した",
+    "hideTitleWhenPinned": false,
+    "alignCenter": false,
+    "font": "sans-serif"
+}

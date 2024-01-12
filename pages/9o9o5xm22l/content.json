@@ -1,0 +1,138 @@
+{
+    "content": [
+        {
+            "id": "d2457520-3717-41a0-8cdb-edbff9619e9d",
+            "text": "<center>\nおそらく、あなたは\n$[x2 **{ result }**]\nかもしれません。\n</center>\n現在のちいかわになる確率: 1/{ total_pattern_num }",
+            "type": "text"
+        },
+        {
+            "id": "216cd1b4-66fc-4a1b-8da5-6d497fe2305a",
+            "var": "nanka_list",
+            "text": "りろーる",
+            "type": "button",
+            "action": "resetRandom",
+            "primary": true
+        },
+        {
+            "id": "2508d3a4-80ab-43f0-a9ea-428e154c8fbc",
+            "text": "<center>\nおそらく、あなたは\n$[x2 **{ result }**]\nかもしれません。\n</center>\n現在のちいかわになる確率: 1/{ total_pattern_num }\n\n{ URL }",
+            "type": "post"
+        }
+    ],
+    "variables": [
+        {
+            "id": "1cf21b72-e5b5-4802-98ec-a7c3ca455fe1",
+            "name": "nanka_list",
+            "type": "aiScriptVar",
+            "value": "nanka_list"
+        },
+        {
+            "id": "73ecdab6-ef29-41fd-b980-b241c8048a08",
+            "name": "size_list",
+            "type": "aiScriptVar",
+            "value": "size_list"
+        },
+        {
+            "id": "f91dbbd8-efa0-4605-bea3-cdf6e317a63f",
+            "name": "visual_list",
+            "type": "aiScriptVar",
+            "value": "visual_list"
+        },
+        {
+            "id": "fbfe900c-e784-45c7-81e0-35775e80bab0",
+            "name": "it_list",
+            "type": "aiScriptVar",
+            "value": "it_list"
+        },
+        {
+            "id": "da3c5809-9a56-4ae2-a1d4-e9f448636602",
+            "args": [
+                {
+                    "id": "359e53a1-a59f-4270-967b-1f90e1e974bd",
+                    "type": "ref",
+                    "value": "nanka_list"
+                }
+            ],
+            "name": "nanka",
+            "type": "randomPick",
+            "value": null
+        },
+        {
+            "id": "e41b7857-5226-41a8-be02-ee70f9f501bf",
+            "args": [
+                {
+                    "id": "0565f6a4-c6bb-4372-871d-d79cec0bd49d",
+                    "type": "ref",
+                    "value": "size_list"
+                }
+            ],
+            "name": "size",
+            "type": "randomPick",
+            "value": null
+        },
+        {
+            "id": "d7c98226-4c90-4731-8618-579819a8c805",
+            "args": [
+                {
+                    "id": "c4f68bcb-3f1d-41eb-aa24-d4e1d5bc85b2",
+                    "type": "ref",
+                    "value": "nanka_list"
+                }
+            ],
+            "name": "nanka2",
+            "type": "randomPick",
+            "value": null
+        },
+        {
+            "id": "2f451353-0fea-462f-98f7-590cda3d12ac",
+            "args": [
+                {
+                    "id": "d7466d0c-7bca-426e-bd1c-ab723d95cb78",
+                    "args": [
+                        {
+                            "id": "9eedcdf6-4ac4-48a4-ad4e-94298dc3c9d4",
+                            "type": null,
+                            "value": null
+                        }
+                    ],
+                    "type": "ref",
+                    "value": "visual_list"
+                }
+            ],
+            "name": "visual",
+            "type": "randomPick",
+            "value": null
+        },
+        {
+            "id": "9f571bf3-7199-4d6a-9967-7827f391b113",
+            "args": [
+                {
+                    "id": "9e6628ba-3db8-4bd9-9997-4cddda007c09",
+                    "type": "ref",
+                    "value": "it_list"
+                }
+            ],
+            "name": "it",
+            "type": "randomPick",
+            "value": null
+        },
+        {
+            "id": "d00f2eab-13c7-4961-a08d-40c7de363e90",
+            "name": "result",
+            "type": "text",
+            "value": "{nanka}{size}、{nanka2}{visual}{it}"
+        },
+        {
+            "id": "d59975fb-740d-4006-94d9-b72d9acd7b79",
+            "name": "total_pattern_num",
+            "type": "aiScriptVar",
+            "value": "total_pattern_num"
+        }
+    ],
+    "title": "なんかちいさくてかわいいやつ",
+    "name": "nantka_kawaii_yatsu",
+    "summary": "なんかちいさくてかわいいやつかどうかを検証するかもしれません（アイキャッチは @nantka 作）",
+    "hideTitleWhenPinned": false,
+    "alignCenter": true,
+    "font": "sans-serif"
+}

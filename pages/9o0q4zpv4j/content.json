@@ -1,0 +1,209 @@
+{
+    "content": [
+        {
+            "id": "8eebe756-ccfd-421a-bade-a7a8db248d50",
+            "text": "<center>\nあなたは$[x2 **{ result }**]です。\n$[x2 { emoji }]\n</center>",
+            "type": "text"
+        },
+        {
+            "id": "0e02ec06-56df-4be9-a17e-959ccf6ff947",
+            "text": "<center>\nあなたは$[x2 **{ result }**]です。\n$[x2 { emoji }]\n</center>\n\n{ URL }",
+            "type": "post"
+        }
+    ],
+    "variables": [
+        {
+            "id": "4b848b0e-7ba6-40a9-aff2-7acc466d59cc",
+            "name": "nantka_list",
+            "type": "textList",
+            "value": "な\nん\nと\nか"
+        },
+        {
+            "id": "0150759a-155f-4728-abd8-48b7e3d77d90",
+            "name": "concat_nantka",
+            "type": "fn",
+            "value": {
+                "slots": [
+                    {
+                        "name": "na",
+                        "type": null
+                    },
+                    {
+                        "name": "n",
+                        "type": null
+                    },
+                    {
+                        "name": "t",
+                        "type": null
+                    },
+                    {
+                        "name": "ka",
+                        "type": null
+                    }
+                ],
+                "expression": {
+                    "id": "fea6c8bf-61cf-47c4-957c-02333588da33",
+                    "type": "text",
+                    "value": "$[rainbow $[fg.color=ff0000 { na }]$[fg.color=8000ff { n }]$[fg.color=00ffff { t }]$[fg.color=80ff00 { ka }]]"
+                }
+            }
+        },
+        {
+            "id": "8de8d39b-f268-4022-b955-a11badf70e0c",
+            "args": [
+                {
+                    "id": "c19fc408-46af-4525-ac58-6a53ba0bec40",
+                    "type": "number",
+                    "value": 0
+                },
+                {
+                    "id": "14eed466-800b-45d0-958a-27c825e84862",
+                    "type": "number",
+                    "value": 2147483647
+                }
+            ],
+            "name": "rand_seed",
+            "type": "dailyRannum",
+            "value": null
+        },
+        {
+            "id": "ee0cffe8-78bf-4e75-be8b-66494f459948",
+            "name": "rand_nantoka",
+            "type": "fn",
+            "value": {
+                "slots": [
+                    {
+                        "name": "seed",
+                        "type": null
+                    }
+                ],
+                "expression": {
+                    "id": "caae4761-bd5d-4333-84db-7c9e5af5623b",
+                    "args": [
+                        {
+                            "id": "b8a64f0c-36e8-4944-b12b-a3011c9178cf",
+                            "type": "text",
+                            "value": "{ seed }{ rand_seed }なんとかふれーばー"
+                        },
+                        {
+                            "id": "d79f951f-afdc-490e-ae4b-dfa19f5ae502",
+                            "type": "ref",
+                            "value": "nantka_list"
+                        }
+                    ],
+                    "type": "seedRandomPick",
+                    "value": null
+                }
+            }
+        },
+        {
+            "id": "a8f09fd6-f5dc-4557-a169-477332eee014",
+            "args": [
+                {
+                    "id": "750d1ab7-df73-481c-bbda-dc93aa297d4a",
+                    "args": [
+                        {
+                            "id": "e49acfa5-9447-483f-bf17-bf88c4f75d89",
+                            "args": [
+                                {
+                                    "id": "08bd9d68-2b85-4301-bca1-b1d2444c063f",
+                                    "type": "number",
+                                    "value": 0
+                                },
+                                {
+                                    "id": "2359d139-cff8-4553-9316-b541b6612b45",
+                                    "type": "number",
+                                    "value": ""
+                                }
+                            ],
+                            "type": "text",
+                            "value": "na"
+                        }
+                    ],
+                    "type": "fn:rand_nantoka",
+                    "value": null
+                },
+                {
+                    "id": "0d5cd596-70d4-4da1-b96f-13ab27cab0f3",
+                    "args": [
+                        {
+                            "id": "919aeda3-2c2f-482d-bed8-a86bd19d9e25",
+                            "type": "text",
+                            "value": "n"
+                        }
+                    ],
+                    "type": "fn:rand_nantoka",
+                    "value": null
+                },
+                {
+                    "id": "a00c26b2-6c07-43cd-87e7-9c3f0608616e",
+                    "args": [
+                        {
+                            "id": "b55dd424-c4a2-470b-b460-1c241a3eb02e",
+                            "type": "text",
+                            "value": "t"
+                        }
+                    ],
+                    "type": "fn:rand_nantoka",
+                    "value": "t"
+                },
+                {
+                    "id": "442c695e-a7b7-40d2-a763-69cb7b27088b",
+                    "args": [
+                        {
+                            "id": "d47b33df-584c-44a5-8c4d-3c5505f6f49a",
+                            "type": "text",
+                            "value": "ka"
+                        }
+                    ],
+                    "type": "fn:rand_nantoka",
+                    "value": "ka"
+                }
+            ],
+            "name": "result",
+            "type": "fn:concat_nantka",
+            "value": null
+        },
+        {
+            "id": "7c0786d4-f04f-4b8e-9792-e561106818dd",
+            "args": [
+                {
+                    "id": "87ddcb92-7e33-4267-99ac-146b665a8c7b",
+                    "args": [
+                        {
+                            "id": "68658723-8c47-42d6-b078-0f1fb62be368",
+                            "type": "ref",
+                            "value": "result"
+                        },
+                        {
+                            "id": "0cc3f310-adb7-4723-a2a6-da2e79e9de3b",
+                            "type": "text",
+                            "value": "なんとか"
+                        }
+                    ],
+                    "type": "eq",
+                    "value": null
+                },
+                {
+                    "id": "3bc1594d-7bf8-42b1-9a24-f450c784265b",
+                    "type": "text",
+                    "value": ":petthex_otaku_kun::omedetou:$[flip :dairi_chan:]"
+                },
+                {
+                    "id": "bf41a0c4-5bea-4931-964b-99e514b5608f",
+                    "type": "text",
+                    "value": ":souiuhimoaru:"
+                }
+            ],
+            "name": "emoji",
+            "type": "if",
+            "value": ":kakoku:"
+        }
+    ],
+    "title": "なんとか診断",
+    "name": "nantka-sindan",
+    "summary": "あなたがなんとかであるか診断します（たぶん1日3回変わる）確率は1/256で256回試行すると63.2%の確率で当たります（たぶん）",
+    "hideTitleWhenPinned": false,
+    "alignCenter": false,
+    "font": "sans-serif"
+}
